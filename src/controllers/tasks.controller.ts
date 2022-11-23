@@ -86,9 +86,9 @@ export class TasksController {
       }
 
       const user = User.create(
+        userResult.id,
         userResult.name,
-        userResult.pass,
-        userResult.id
+        userResult.pass
         // growdeverResult.skills?.split(",")
       );
 
@@ -114,7 +114,7 @@ export class TasksController {
   public async update(req: Request, res: Response) {
     try {
       const { id } = req.params;
-      const { description, detail } = req.body;
+      const { description, detail, arquivada } = req.body;
 
       const repository = new TasksRepository();
       const result = await repository.get(id);
@@ -122,13 +122,14 @@ export class TasksController {
       if (!result) {
         return res.status(404).send({
           ok: false,
-          message: "User não encontrado!",
+          message: "Task não encontrada!",
         });
       }
 
       const resultUpdate = repository.update(result, {
         description,
         detail,
+        arquivada,
       });
 
       return res.status(200).send({

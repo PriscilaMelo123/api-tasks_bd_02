@@ -28,7 +28,9 @@ export class TasksEntity {
   detail!: string;
 
   @Column({
-    insert: false,
+    type: "boolean",
+    // update: true,
+    // default: false,
   })
   arquivada!: boolean;
 
