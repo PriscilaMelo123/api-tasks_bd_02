@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { User } from "../models/user";
 import { UserRepository } from "../database/repositories/user.repository";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 export class UserController {
   public async list(req: Request, res: Response) {
@@ -73,7 +75,9 @@ export class UserController {
         });
       }
 
-      const user = new User(name, pass);
+      const hashPass = await bcrypt.hash(pass, 10);
+
+      const user = new User(name, hashPass);
 
       const repository = new UserRepository();
       const result = await repository.create(user);
@@ -120,6 +124,59 @@ export class UserController {
       return res.status(500).send({
         ok: false,
         message: error.toString(),
+      });
+    }
+  }
+
+  public async login(req: Request, res: Response) {
+    try {
+      const { name, pass } = req.body;
+
+      const repository = new UserRepository();
+      const result = await repository.get(name);
+
+      if (!name) {
+        return res.status(400).send({
+          ok: false,
+          message: "Name or Pass not provided",
+        });
+      }
+
+      // if (result) {
+      //   const verifyPass = await bcrypt.compare(pass, result?.pass);
+      //   console.log(verifyPass);
+      // }
+
+      if (!pass) {
+        return res.status(400).send({
+          ok: false,
+          message: "Name or pass not provided",
+        });
+
+        //   const token = jwt.sign({ id: result.id }, process.env.JWT_PASS ?? "", {
+        //     expiresIn: "8h",
+        //   });
+
+        //   const { pass: _, ...userLogin } = result;
+        //   console.log(result);
+
+        //   return res.json({
+        //     ok: true,
+        //     user: userLogin,
+        //     token: token,
+        //     message: "Successfully",
+        //   });
+      }
+      return res.status(201).send({
+        ok: true,
+        message: "Successfully",
+        data: result,
+      });
+    } catch (error: any) {
+      return res.status(500).send({
+        ok: false,
+        message: "Instabilidade no servidor",
+        error: error.toString(),
       });
     }
   }
