@@ -28,7 +28,7 @@ export class UserController {
       const { id } = req.params;
 
       const repository = new UserRepository();
-      const result = await repository.get(id);
+      const result = await repository.getId(id);
 
       if (!result) {
         return res.status(404).send({
