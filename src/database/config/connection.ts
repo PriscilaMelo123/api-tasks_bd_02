@@ -16,7 +16,6 @@ export class DatabaseConnection {
     if (!this._connection) {
       throw new Error("A database não tá inicializada");
     }
-
     return this._connection;
   }
 }

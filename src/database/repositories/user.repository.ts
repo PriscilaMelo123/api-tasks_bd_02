@@ -18,10 +18,10 @@ export class UserRepository {
     });
   }
 
-  public async get(id: string) {
+  public async get(name: string) {
     return await this._repository.findOne({
       where: {
-        id,
+        name,
       },
       relations: {
         tasks: true,

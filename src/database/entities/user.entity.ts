@@ -3,10 +3,10 @@ import {
   Entity,
   OneToMany,
   PrimaryColumn,
-  OneToOne,
   JoinColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  PrimaryGeneratedColumn,
 } from "typeorm";
 import { TasksEntity } from "./tasks.entity";
 
@@ -14,13 +14,24 @@ import { TasksEntity } from "./tasks.entity";
   name: "users",
 })
 export class UserEntity {
-  @PrimaryColumn()
-  id!: string;
+  @PrimaryGeneratedColumn("uuid") id!: string;
 
-  @Column()
+  // @PrimaryColumn({
+  //   length: 60,
+  // })
+  // id!: string;
+
+  @Column({
+    length: 60,
+    nullable: true,
+    unique: true,
+  })
   name!: string;
 
-  @Column()
+  @Column({
+    length: 10,
+    nullable: true,
+  })
   pass!: string;
 
   @CreateDateColumn({

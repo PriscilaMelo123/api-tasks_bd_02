@@ -9,6 +9,6 @@ export default new DataSource({
   },
   synchronize: false,
   entities: ["src/database/entities/**/*.ts"],
-  migrations: ["src/database/migrations/**/*.ts"],
-  schema: "public",
+  migrations: ["src/database/migration/**/*.ts"],
+  schema: "Tasks",
 });

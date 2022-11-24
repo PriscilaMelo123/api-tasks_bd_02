@@ -6,6 +6,7 @@ import {
   JoinColumn,
   ManyToOne,
   PrimaryColumn,
+  PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
 import { UserEntity } from "./user.entity";
@@ -14,23 +15,30 @@ import { UserEntity } from "./user.entity";
   name: "tasks",
 })
 export class TasksEntity {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn("uuid")
   id!: string;
 
+  // @PrimaryColumn({
+  //   length: 60,
+  // })
+  // id!: string;
+
   @Column({
+    nullable: true,
     length: 60,
   })
   description!: string;
 
   @Column({
+    nullable: true,
     length: 60,
   })
   detail!: string;
 
   @Column({
-    type: "boolean",
-    // update: true,
-    // default: false,
+    // nullable: true,
+    // type: "boolean",
+    default: 0,
   })
   arquivada!: boolean;
 
