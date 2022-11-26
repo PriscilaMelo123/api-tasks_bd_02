@@ -33,7 +33,7 @@ export class TasksRepository {
       description: tasks.description,
       detail: tasks.detail,
       id_user: tasks.user.id,
-      arquivada: tasks.arquivada,
+      // arquivada: tasks.arquivada,
     });
 
     return await this._repository.save(tasksEntity);

@@ -30,17 +30,17 @@ export class UserRepository {
   }
 
   public async getId(id: string) {
-    return await this._repository.findOneBy({
-      id,
-
-      // relations: {
-      //   tasks: true,
-      // },
+    return await this._repository.findOne({
+      where: {
+        id,
+      },
+      relations: {
+        tasks: true,
+      },
     });
   }
 
   public async create(user: User) {
-    // Criar o endereço
     const userEntity = this._repository.create({
       id: user.id,
       name: user.name,

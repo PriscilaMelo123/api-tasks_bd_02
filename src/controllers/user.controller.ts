@@ -37,12 +37,7 @@ export class UserController {
         });
       }
 
-      const user = User.create(
-        result.name,
-        result.pass,
-        result.id
-        // result.skills?.split(",") ?? []
-      );
+      const user = User.create(result.name, result.pass, result.id);
 
       return res.status(200).send({
         ok: true,
@@ -75,9 +70,9 @@ export class UserController {
         });
       }
 
-      const hashPass = await bcrypt.hash(pass, 10);
+      // const hashPass = await bcrypt.hash(pass, 10);
 
-      const user = new User(name, hashPass);
+      const user = new User(name, pass);
 
       const repository = new UserRepository();
       const result = await repository.create(user);

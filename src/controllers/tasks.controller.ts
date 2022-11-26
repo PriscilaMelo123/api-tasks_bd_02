@@ -50,8 +50,7 @@ export class TasksController {
 
   public async create(req: Request, res: Response) {
     try {
-      // const { id_user } = req.params;
-      const { description, detail, idUser, arquivada } = req.body;
+      const { description, detail, idUser } = req.body;
 
       if (!description) {
         return res.status(400).send({
@@ -76,7 +75,7 @@ export class TasksController {
 
       // 1- verificar se o user existe
       const userRepository = new UserRepository();
-      const userResult = await userRepository.get(idUser);
+      const userResult = await userRepository.getId(idUser);
 
       if (!userResult) {
         return res.status(404).send({
@@ -85,17 +84,10 @@ export class TasksController {
         });
       }
 
-      const user = User.create(
-        userResult.id,
-        userResult.name,
-        userResult.pass
-        // growdeverResult.skills?.split(",")
-      );
+      const user = User.create(userResult.id, userResult.name, userResult.pass);
 
-      // 2- criar uma avaliação (model)
-      const tasks = new Tasks(description, detail, user, arquivada);
+      const tasks = new Tasks(description, detail, user);
 
-      // 3 - salvar a avaliação no BD
       const tasksRepository = new TasksRepository();
       const result = await tasksRepository.create(tasks);
 

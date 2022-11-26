@@ -14,7 +14,6 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/tasks", tasksRoutes);
-// app.use("/:id/tasks", tasksRoutes);
 app.use("/user", userRoutes);
 
 DatabaseConnection.connect().then(() => {
