@@ -13,6 +13,12 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+app.use((_req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "*");
+  next();
+});
+
 app.use("/tasks", tasksRoutes);
 app.use("/user", userRoutes);
 
